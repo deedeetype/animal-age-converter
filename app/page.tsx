@@ -2,22 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ANIMAL_CATEGORIES, FLAT_ANIMALS } from './animals';
 
-const ANIMALS = [
-  { name: 'Dog', emoji: '🐶', ratio: 7, lifeExpectancy: 12 },
-  { name: 'Cat', emoji: '🐱', ratio: 7, lifeExpectancy: 15 },
-  { name: 'Rabbit', emoji: '🐰', ratio: 8, lifeExpectancy: 10 },
-  { name: 'Hamster', emoji: '🐹', ratio: 30, lifeExpectancy: 3 },
-  { name: 'Bird', emoji: '🐦', ratio: 5, lifeExpectancy: 15 },
-  { name: 'Turtle', emoji: '🐢', ratio: 1, lifeExpectancy: 100 },
-  { name: 'Mouse', emoji: '🐭', ratio: 25, lifeExpectancy: 2 },
-  { name: 'Elephant', emoji: '🐘', ratio: 3, lifeExpectancy: 60 },
-];
+const QUICK_PICK = FLAT_ANIMALS.slice(0, 8);
 
 export default function AnimalAgeConverter() {
   const [selectedAnimal, setSelectedAnimal] = useState<any>(null);
   const [ageInput, setAgeInput] = useState('');
   const [humanAge, setHumanAge] = useState<number | null>(null);
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
     if (selectedAnimal && ageInput && !isNaN(Number(ageInput))) {
@@ -26,6 +21,15 @@ export default function AnimalAgeConverter() {
       setHumanAge(null);
     }
   }, [selectedAnimal, ageInput]);
+
+  const filteredAnimals = FLAT_ANIMALS.filter(animal => {
+    const matchesSearch = animal.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeCategory === 'All' || 
+      Object.entries(ANIMAL_CATEGORIES).some(([cat, animals]) => 
+        cat === activeCategory && animals.some(a => a.name === animal.name)
+      );
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-[#39FF14] selection:text-black p-6 flex items-center justify-center">
@@ -60,7 +64,7 @@ export default function AnimalAgeConverter() {
                 Select Creature
               </label>
               <div className="grid grid-cols-4 gap-3">
-                {ANIMALS.map((animal, index) => (
+                {QUICK_PICK.map((animal, index) => (
                   <motion.button
                     key={animal.name}
                     initial={{ opacity: 0, y: 10 }}
@@ -80,6 +84,14 @@ export default function AnimalAgeConverter() {
                   </motion.button>
                 ))}
               </div>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setIsLibraryOpen(true)}
+                className="w-full py-3 rounded-xl border-2 border-dashed border-zinc-700 text-zinc-500 text-xs font-bold uppercase tracking-widest hover:border-[#39FF14] hover:text-[#39FF14] transition-all"
+              >
+                Browse Full Library
+              </motion.button>
             </div>
 
             {/* Age Input */}
@@ -122,7 +134,6 @@ export default function AnimalAgeConverter() {
                       Life expectancy for {selectedAnimal.name}s: {selectedAnimal.lifeExpectancy} yrs
                     </p>
                   </div>
-                  {/* Decorative background circle */}
                   <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/20 rounded-full blur-2xl" />
                 </motion.div>
               ) : (
@@ -153,6 +164,101 @@ export default function AnimalAgeConverter() {
           </p>
         </motion.div>
       </motion.div>
+
+      {/* Library Modal */}
+      <AnimatePresence>
+        {isLibraryOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="w-full max-w-2xl bg-[#111] border border-zinc-800 rounded-3xl shadow-2xl flex flex-col max-h-[80vh]"
+            >
+              {/* Modal Header */}
+              <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
+                <h2 className="text-2xl font-black italic tracking-tighter">
+                  ANIMAL<span className="text-[#39FF14]">LIB</span>
+                </h2>
+                <button 
+                  onClick={() => setIsLibraryOpen(false)}
+                  className="p-2 rounded-full bg-zinc-900 text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-6 overflow-y-auto">
+                {/* Search and Filters */}
+                <div className="space-y-4">
+                  <div className="relative">
+                    <input 
+                      type="text"
+                      placeholder="Search biological entity..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full bg-zinc-900 border-2 border-zinc-800 rounded-2xl px-6 py-3 text-white focus:outline-none focus:border-[#39FF14] transition-colors"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 text-xs font-bold uppercase">
+                      Search
+                    </span>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {['All', ...Object.keys(ANIMAL_CATEGORIES)].map(cat => (
+                      <button
+                        key={cat}
+                        onClick={() => setActiveCategory(cat)}
+                        className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
+                          activeCategory === cat 
+                            ? 'bg-[#39FF14] text-black' 
+                            : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Animal Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {filteredAnimals.map((animal) => (
+                    <motion.button
+                      key={animal.name}
+                      whileHover={{ scale: 1.05, borderColor: '#39FF14' }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        setSelectedAnimal(animal);
+                        setIsLibraryOpen(false);
+                      }}
+                      className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${
+                        selectedAnimal?.name === animal.name 
+                          ? 'border-[#39FF14] bg-[#39FF14]/10 text-[#39FF14]' 
+                          : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:bg-zinc-800'
+                      }`}
+                    >
+                      <span className="text-3xl mb-2">{animal.emoji}</span>
+                      <span className="text-xs font-bold uppercase tracking-tight text-center">{animal.name}</span>
+                    </motion.button>
+                  ))}
+                  {filteredAnimals.length === 0 && (
+                    <div className="col-span-full text-center py-12 text-zinc-600 italic text-sm">
+                      No matching species found in database...
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,0 +1,57 @@
+
+export const ANIMAL_CATEGORIES = {
+  Mammals: [
+    { name: 'Dog', emoji: '🐶', ratio: 7, lifeExpectancy: 12 },
+    { name: 'Cat', emoji: '🐱', ratio: 7, lifeExpectancy: 15 },
+    { name: 'Rabbit', emoji: '🐰', ratio: 8, lifeExpectancy: 10 },
+    { name: 'Hamster', emoji: '🐹', ratio: 30, lifeExpectancy: 3 },
+    { name: 'Mouse', emoji: '🐭', ratio: 25, lifeExpectancy: 2 },
+    { name: 'Elephant', emoji: '🐘', ratio: 3, lifeExpectancy: 60 },
+    { name: 'Lion', emoji: '🦁', ratio: 6, lifeExpectancy: 15 },
+    { name: 'Tiger', emoji: '🐯', ratio: 6, lifeExpectancy: 12 },
+    { name: 'Monkey', emoji: '🐒', ratio: 4, lifeExpectancy: 25 },
+    { name: 'Giraffe', emoji: '🦒', ratio: 4, lifeExpectancy: 25 },
+    { name: 'Horse', emoji: '🐴', ratio: 5, lifeExpectancy: 25 },
+    { name: 'Panda', emoji: '🐼', ratio: 5, lifeExpectancy: 20 },
+    { name: 'Koala', emoji: '🐨', ratio: 6, lifeExpectancy: 15 },
+    { name: 'Pig', emoji: '🐷', ratio: 6, lifeExpectancy: 8 },
+    { name: 'Sheep', emoji: '🐑', ratio: 5, lifeExpectancy: 12 },
+    { name: 'Cow', emoji: '🐮', ratio: 5, lifeExpectancy: 20 },
+    { name: 'Goat', emoji: '🐐', ratio: 5, lifeExpectancy: 15 },
+    { name: 'Rat', emoji: '🐀', ratio: 30, lifeExpectancy: 3 },
+    { name: 'Bat', emoji: '🦇', ratio: 15, lifeExpectancy: 10 },
+    { name: 'Whale', emoji: '🐋', ratio: 2, lifeExpectancy: 80 },
+    { name: 'Dolphin', emoji: '🐬', ratio: 3, lifeExpectancy: 40 },
+    { name: 'Seal', emoji: '🦭', ratio: 4, lifeExpectancy: 20 },
+  ],
+  Birds: [
+    { name: 'Bird', emoji: '🐦', ratio: 5, lifeExpectancy: 15 },
+    { name: 'Parrot', emoji: '🦜', ratio: 4, lifeExpectancy: 50 },
+    { name: 'Eagle', emoji: '🦅', ratio: 4, lifeExpectancy: 20 },
+    { name: 'Owl', emoji: '🦉', ratio: 4, lifeExpectancy: 15 },
+    { name: 'Penguin', emoji: '🐧', ratio: 4, lifeExpectancy: 20 },
+    { name: 'Swan', emoji: '🦢', ratio: 3, lifeExpectancy: 20 },
+    { name: 'Chicken', emoji: '🐔', ratio: 8, lifeExpectancy: 10 },
+    { name: 'Duck', emoji: '🦆', ratio: 7, lifeExpectancy: 10 },
+  ],
+  Reptiles: [
+    { name: 'Turtle', emoji: '🐢', ratio: 1, lifeExpectancy: 100 },
+    { name: 'Snake', emoji: '🐍', ratio: 2, lifeExpectancy: 25 },
+    { name: 'Lizard', emoji: '🦎', ratio: 3, lifeExpectancy: 15 },
+    { name: 'Crocodile', emoji: '🐊', ratio: 2, lifeExpectancy: 50 },
+  ],
+  Amphibians: [
+    { name: 'Frog', emoji: '🐸', ratio: 10, lifeExpectancy: 10 },
+    { name: 'Toad', emoji: '🐸', ratio: 10, lifeExpectancy: 10 },
+    { name: 'Salamander', emoji: '🦎', ratio: 8, lifeExpectancy: 15 },
+  ],
+  Aquatic: [
+    { name: 'Fish', emoji: '🐟', ratio: 6, lifeExpectancy: 10 },
+    { name: 'Shark', emoji: '🦈', ratio: 3, lifeExpectancy: 30 },
+    { name: 'Octopus', emoji: '🐙', ratio: 10, lifeExpectancy: 5 },
+    { name: 'Squid', emoji: '🦑', ratio: 12, lifeExpectancy: 4 },
+    { name: 'Shrimp', emoji: '🦐', ratio: 20, lifeExpectancy: 2 },
+  ],
+};
+
+export const FLAT_ANIMALS = Object.values(ANIMAL_CATEGORIES).flat();
