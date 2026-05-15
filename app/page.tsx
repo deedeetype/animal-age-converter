@@ -15,9 +15,9 @@ const ANIMALS = [
 ];
 
 export default function AnimalAgeConverter() {
-  const [selectedAnimal, setSelectedAnimal] = useState(null);
+  const [selectedAnimal, setSelectedAnimal] = useState<any>(null);
   const [ageInput, setAgeInput] = useState('');
-  const [humanAge, setHumanAge] = useState(null);
+  const [humanAge, setHumanAge] = useState<number | null>(null);
 
   useEffect(() => {
     if (selectedAnimal && ageInput && !isNaN(Number(ageInput))) {
