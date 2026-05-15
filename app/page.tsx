@@ -52,7 +52,7 @@ export default function AnimalAgeConverter() {
             Precision biological conversion
           </p>
         </div>
-
+        
         {/* Main Card */}
         <div className="bg-[#111] border border-zinc-800 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#39FF14] to-transparent opacity-50" />
@@ -73,11 +73,7 @@ export default function AnimalAgeConverter() {
                     whileHover={{ scale: 1.05, borderColor: '#39FF14' }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedAnimal(animal)}
-                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all cursor-pointer ${
-                      selectedAnimal?.name === animal.name 
-                        ? 'border-[#39FF14] bg-[#39FF14]/10 text-[#39FF14]' 
-                        : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:bg-zinc-800'
-                    }`}
+                    className={`flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all cursor-pointer ${\n                      selectedAnimal?.name === animal.name \n                        ? 'border-[#39FF14] bg-[#39FF14]/10 text-[#39FF14]' \n                        : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:bg-zinc-800'\n                    }`}
                   >
                     <span className="text-2xl mb-1">{animal.emoji}</span>
                     <span className="text-[10px] font-bold uppercase tracking-tight">{animal.name}</span>
@@ -93,7 +89,7 @@ export default function AnimalAgeConverter() {
                 Browse Full Library
               </motion.button>
             </div>
-
+            
             {/* Age Input */}
             <div className="space-y-4">
               <label className="block text-sm font-bold text-zinc-400 uppercase tracking-wider ml-1">
@@ -105,14 +101,14 @@ export default function AnimalAgeConverter() {
                   value={ageInput}
                   onChange={(e) => setAgeInput(e.target.value)}
                   placeholder="0"
-                  className="w-full bg-zinc-900 border-2 border-zinc-800 rounded-2xl px-6 py-4 text-2xl font-bold focus:outline-none focus:border-[#39FF14] transition-colors text-center placeholder:text-zinc-700"
+                  className="w-full bg-zinc-900 border-2 border-zinc-800 rounded-2xl px-6 py-4 text-2xl font-bold focus:outline-none focus:border-[#39FF14] transition-colors text-center placeholder:text-zinc-700 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
                 <span className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-500 font-bold text-sm uppercase">
                   Years
                 </span>
               </div>
             </div>
-
+            
             {/* Result Section */}
             <AnimatePresence mode="wait">
               {humanAge !== null && selectedAnimal ? (
@@ -157,103 +153,94 @@ export default function AnimalAgeConverter() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-8 text-center"
+          className="mt-8 text-center text-zinc-600 text-[10px] font-bold uppercase tracking-[0.2em]"
         >
-          <p className="text-zinc-700 text-[10px] uppercase tracking-[0.2em] font-bold">
-            © 2026 BioMetric Intelligence System
-          </p>
+          © 2026 Biological Age Matrix
         </motion.div>
       </motion.div>
 
-      {/* Library Modal */}
+      {/* Full Library Modal */}
       <AnimatePresence>
         {isLibraryOpen && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
           >
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="w-full max-w-2xl bg-[#111] border border-zinc-800 rounded-3xl shadow-2xl flex flex-col max-h-[80vh]"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-[#111] border border-zinc-800 w-full max-w-2xl rounded-3xl overflow-hidden flex flex-col max-h-[90vh]"
             >
               {/* Modal Header */}
-              <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
+              <div className="p-6 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
                 <h2 className="text-2xl font-black italic tracking-tighter">
-                  ANIMAL<span className="text-[#39FF14]">LIB</span>
+                  CREATURE <span className="text-[#39FF14]">LIBRARY</span>
                 </h2>
                 <button 
                   onClick={() => setIsLibraryOpen(false)}
-                  className="p-2 rounded-full bg-zinc-900 text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all"
+                  className="p-2 hover:bg-zinc-800 rounded-full transition-colors"
                 >
-                  ✕
+                  <svg className="w-6 h-6 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </div>
 
-              {/* Modal Body */}
-              <div className="p-6 space-y-6 overflow-y-auto">
-                {/* Search and Filters */}
-                <div className="space-y-4">
-                  <div className="relative">
-                    <input 
-                      type="text"
-                      placeholder="Search biological entity..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-zinc-900 border-2 border-zinc-800 rounded-2xl px-6 py-3 text-white focus:outline-none focus:border-[#39FF14] transition-colors"
-                    />
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 text-xs font-bold uppercase">
-                      Search
-                    </span>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {['All', ...Object.keys(ANIMAL_CATEGORIES)].map(cat => (
-                      <button
-                        key={cat}
-                        onClick={() => setActiveCategory(cat)}
-                        className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
-                          activeCategory === cat 
-                            ? 'bg-[#39FF14] text-black' 
-                            : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
+              {/* Search and Filter */}
+              <div className="p-6 space-y-6 bg-zinc-900/30">
+                <div className="relative">
+                  <input 
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search animals..."
+                    className="w-full bg-zinc-900 border-2 border-zinc-800 rounded-2xl px-5 py-3 font-medium focus:outline-none focus:border-[#39FF14] transition-all placeholder:text-zinc-600"
+                  />
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
                   </div>
                 </div>
 
-                {/* Animal Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {filteredAnimals.map((animal) => (
-                    <motion.button
-                      key={animal.name}
-                      whileHover={{ scale: 1.05, borderColor: '#39FF14' }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        setSelectedAnimal(animal);
-                        setIsLibraryOpen(false);
-                      }}
-                      className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${
-                        selectedAnimal?.name === animal.name 
-                          ? 'border-[#39FF14] bg-[#39FF14]/10 text-[#39FF14]' 
-                          : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:bg-zinc-800'
-                      }`}
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                  {['All', ...Object.keys(ANIMAL_CATEGORIES)].map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap ${\n                        activeCategory === cat \n                          ? 'bg-[#39FF14] text-black' \n                          : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'\n                      }`}
                     >
-                      <span className="text-3xl mb-2">{animal.emoji}</span>
-                      <span className="text-xs font-bold uppercase tracking-tight text-center">{animal.name}</span>
-                    </motion.button>
+                      {cat}
+                    </button>
                   ))}
-                  {filteredAnimals.length === 0 && (
-                    <div className="col-span-full text-center py-12 text-zinc-600 italic text-sm">
-                      No matching species found in database...
-                    </div>
-                  )}
                 </div>
+              </div>
+
+              {/* Animal List */}
+              <div className="p-6 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {filteredAnimals.map((animal) => (
+                  <motion.button
+                    key={animal.name}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setSelectedAnimal(animal);
+                      setIsLibraryOpen(false);
+                    }}
+                    className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${\n                        selectedAnimal?.name === animal.name \n                          ? 'border-[#39FF14] bg-[#39FF14]/10 text-[#39FF14]' \n                          : 'border-zinc-800 bg-zinc-900/50 text-zinc-400 hover:border-zinc-600'\n                      }`}
+                  >
+                    <span className="text-3xl mb-2">{animal.emoji}</span>
+                    <span className="text-xs font-bold uppercase tracking-tight">{animal.name}</span>
+                  </motion.button>
+                ))}
+                {filteredAnimals.length === 0 && (
+                  <div className="col-span-full text-center py-12 text-zinc-500 italic">
+                    No creatures found matching your search.
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
